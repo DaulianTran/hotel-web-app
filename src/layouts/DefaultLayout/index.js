@@ -3,7 +3,7 @@ import Dashboards from '../Dashboards';
 
 function DefaultLayout({ children }) {
   return (
-    <div>
+    <div class="flex flex-col h-screen	">
       <div>day la Header</div>
 
       <div class="flex flex-row">

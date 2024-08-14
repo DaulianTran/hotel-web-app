@@ -3,7 +3,7 @@ import { faUser, faChartLine, faIdCard } from '@fortawesome/free-solid-svg-icons
 
 function Dashboards({ icon, name }) {
   return (
-    <div class="bg-[#083344] w-2/12 h-svh overflow-auto">
+    <div class="bg-[#083344] w-2/12 overflow-auto">
       <ul>
         <Nav icon={faUser} name="Customer" href="/customer" />
         <Nav icon={faUser} name="Staff" href="/staff" />
