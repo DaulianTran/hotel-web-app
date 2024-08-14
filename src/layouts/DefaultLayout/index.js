@@ -1,13 +1,17 @@
 import * as React from 'react';
+import Dashboards from '../Dashboards';
 import Header from '../Header';
 
 function DefaultLayout({ children }) {
   return (
-    <div>
+    <div class="flex flex-col h-screen	">
       <Header />
       <div>day la Header</div>
-      <div>day la dashboards</div>
-      <div>day la main content {children}</div>
+
+      <div class="flex flex-row">
+        <Dashboards />
+        {children}
+      </div>
     </div>
   );
 }
