@@ -1,6 +1,5 @@
 import Button from '@/components/Button';
 import Search from '@/components/Search';
-
 import Table from '@/components/Table';
 function Customer() {
   const headers = ['#', 'Name', 'City', 'Phone', 'Actions'];
@@ -51,7 +50,11 @@ function Customer() {
   return (
     <div>
       day la trang customer
-      <Button name="add" href="/add" />
+      <div class="flex flex-row">
+        <Button name="add" href="/add" />
+        <Search placeholder={'Search Customer'} />
+      </div>
+      <Table headers={headers} rows={rows} rowsPerPage={3} />
     </div>
   );
 }
