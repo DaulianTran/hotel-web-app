@@ -1,4 +1,6 @@
 import Button from '@/components/Button';
+import Search from '@/components/Search';
+
 import Table from '@/components/Table';
 function Customer() {
   const headers = ['#', 'Name', 'City', 'Phone', 'Actions'];
@@ -50,7 +52,6 @@ function Customer() {
     <div>
       day la trang customer
       <Button name="add" href="/add" />
-      <Table headers={headers} rows={rows} rowsPerPage={2} />
     </div>
   );
 }
