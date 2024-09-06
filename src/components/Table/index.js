@@ -6,7 +6,9 @@
   + rowsPerPage:  number
 */
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from './Pagination';
+import { faScrewdriverWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function Table({ headers, rows, actions, rowsPerPage }) {
   return (
@@ -26,6 +28,12 @@ function Table({ headers, rows, actions, rowsPerPage }) {
                         {header}
                       </th>
                     ))}
+                  <th
+                    scope="col"
+                    class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400 w-40"
+                  >
+                    ACTIONS
+                  </th>
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
@@ -40,6 +48,10 @@ function Table({ headers, rows, actions, rowsPerPage }) {
                           {value}
                         </td>
                       ))}
+                      <td class="flex flex-row py-4 px-6 gap-2">
+                        <FontAwesomeIcon icon={faTrash} style={{ color: '#e61433' }} size="4xs" />
+                        <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="4xs" />
+                      </td>
                     </tr>
                   ))
                 ) : (

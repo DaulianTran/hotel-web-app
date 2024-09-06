@@ -2,7 +2,7 @@ import Button from '@/components/Button';
 import Search from '@/components/Search';
 import Table from '@/components/Table';
 function Customer() {
-  const headers = ['#', 'Name', 'City', 'Phone', 'Actions'];
+  const headers = ['#', 'Name', 'City', 'Phone'];
   const rows = [
     {
       id: 1,
@@ -49,7 +49,6 @@ function Customer() {
   ];
   return (
     <div>
-      day la trang customer
       <div class="flex flex-row">
         <Button name="add" href="/add" />
         <Search placeholder={'Search Customer'} />
