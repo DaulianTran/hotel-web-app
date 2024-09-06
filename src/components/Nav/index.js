@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Nav({ icon, name, href, color }) {
   const [iconColor, setIconColor] = useState('white');
@@ -20,10 +21,10 @@ function Nav({ icon, name, href, color }) {
         setTextColor('text-gray-300');
       }}
     >
-      <a class="flex flex-row gap-6 items-center py-2 pl-10" href={href}>
+      <Link class="flex flex-row gap-6 items-center py-2 pl-10" to={href}>
         <FontAwesomeIcon icon={icon} color={iconColor} />
         <span>{name}</span>
-      </a>
+      </Link>
     </li>
   );
 }
