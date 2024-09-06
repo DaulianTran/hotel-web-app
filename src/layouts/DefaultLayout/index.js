@@ -6,11 +6,9 @@ function DefaultLayout({ children }) {
   return (
     <div class="flex flex-col h-screen	">
       <Header />
-      <div>day la Header</div>
-
-      <div class="flex flex-row">
+      <div class="flex flex-row flex-1">
         <Dashboards />
-        {children}
+        <div class="w-10/12">{children}</div>
       </div>
     </div>
   );
