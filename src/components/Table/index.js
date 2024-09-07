@@ -4,22 +4,40 @@
   + rows: array object, dữ liệu bảng
   + actions: array component, chứa component 
   + rowsPerPage:  number
+  + currentPage, onChangePage : control table with state. Must declare both.
+- Future update:
+  + If you about to use pagination in database, you should transfer state to parent component
 */
-import { useState } from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from './Pagination';
 import { faScrewdriverWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
-function Table({ headers, rows, actions, rowsPerPage }) {
-  const [currentPage, setCurrentPage] = useState(1);
+function Table({
+  headers,
+  rows,
+  actions,
+  rowsPerPage,
+  currentPage: externalCurrentPage,
+  onChangePage: externalSetCurrentPage,
+}) {
+  //Internal, external are used to cover case "transfer state from outside or not"
+  const [internalCurrentPage, setInternalCurrentPage] = useState(1);
 
-  const tableRow = (value) => {
+  const currentPage = externalCurrentPage !== undefined ? externalCurrentPage : internalCurrentPage;
+  const onChangePage = externalSetCurrentPage !== undefined ? externalSetCurrentPage : setInternalCurrentPage;
+
+  // table cell template
+  const tableCell = (value) => {
     return (
       <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white" key={value}>
         {value}
       </td>
     );
   };
+
+  // return table rows based on page
   const renderTableRowsByPage = (currentPage, rowsPerPage) => {
     const elements = [];
     const startIndex = (currentPage - 1) * rowsPerPage;
@@ -34,7 +52,7 @@ function Table({ headers, rows, actions, rowsPerPage }) {
 
       const values = Object.values(row);
       for (let j = 0; j < values.length; j++) {
-        rowCells.push(tableRow(values[j]));
+        rowCells.push(tableCell(values[j]));
       }
 
       elements.push(
@@ -51,14 +69,11 @@ function Table({ headers, rows, actions, rowsPerPage }) {
     return elements;
   };
 
+  // return all table rows at once
   const renderAllTableRow = () => {
     return rows.map((row, index) => (
       <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" key={index}>
-        {Object.values(row).map((value) => (
-          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white" key={value}>
-            {value}
-          </td>
-        ))}
+        {Object.values(row).map((value) => tableCell(value))}
         <td class="flex flex-row py-4 px-6 gap-2">
           <FontAwesomeIcon icon={faTrash} style={{ color: '#e61433' }} size="4xs" />
           <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="4xs" />
@@ -93,6 +108,7 @@ function Table({ headers, rows, actions, rowsPerPage }) {
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                {/* Function check if user declare rowPerPage to decide which "return table rows" function is used */}
                 {rows ? (
                   rowsPerPage ? (
                     renderTableRowsByPage(currentPage, rowsPerPage)
@@ -107,12 +123,13 @@ function Table({ headers, rows, actions, rowsPerPage }) {
           </div>
         </div>
       </div>
+      {/* Pass state to paginate tab */}
       {rowsPerPage && (
         <Pagination
           totalItems={rows.length}
           rowsPerPage={rowsPerPage}
           currentPage={currentPage}
-          handleSetCurrentPage={setCurrentPage}
+          onChangePage={onChangePage}
         />
       )}
     </>

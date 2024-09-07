@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import Button from '@/components/Button';
 import Search from '@/components/Search';
 import Table from '@/components/Table';
 function Customer() {
+  const [currentPage, setCurrentPage] = useState(1);
   const headers = ['#', 'Name', 'City', 'Phone'];
   const rows = [
     {
@@ -53,7 +55,7 @@ function Customer() {
         <Button name="add" href="/add" />
         <Search placeholder={'Search Customer'} />
       </div>
-      <Table headers={headers} rows={rows} rowsPerPage={3} />
+      <Table headers={headers} rows={rows} rowsPerPage={3} currentPage={currentPage} onChangePage={setCurrentPage} />
     </div>
   );
 }

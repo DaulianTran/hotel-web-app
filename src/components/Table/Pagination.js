@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Pagination = ({ totalItems, rowsPerPage, currentPage, handleSetCurrentPage }) => {
+const Pagination = ({ totalItems, rowsPerPage, currentPage, onChangePage }) => {
   if (!rowsPerPage && typeof rowsPerPage !== 'number') {
     return null; // Handle the case where rowPerPage is not valid
   }
@@ -10,13 +10,13 @@ const Pagination = ({ totalItems, rowsPerPage, currentPage, handleSetCurrentPage
 
   const goToNextPage = () => {
     if (currentPage < totalPages) {
-      handleSetCurrentPage(currentPage + 1);
+      onChangePage(currentPage + 1);
     }
   };
 
   const goToPreviousPage = () => {
     if (currentPage > 1) {
-      handleSetCurrentPage(currentPage - 1);
+      onChangePage(currentPage - 1);
     }
   };
 
@@ -46,7 +46,7 @@ const Pagination = ({ totalItems, rowsPerPage, currentPage, handleSetCurrentPage
             ? 'bg-sky-500 text-white cursor-default'
             : 'text-gray-700 hover:border-sky-500 hover:text-sky-500')
         }
-        onClick={() => handleSetCurrentPage(i)}
+        onClick={() => onChangePage(i)}
       >
         {i}
       </button>,
