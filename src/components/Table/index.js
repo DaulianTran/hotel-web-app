@@ -15,7 +15,7 @@ import { faScrewdriverWrench, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
 
 function Table({
-  headers,
+  AttrToNameHeader,
   rows,
   actions,
   rowsPerPage,
@@ -28,6 +28,7 @@ function Table({
   const currentPage = externalCurrentPage !== undefined ? externalCurrentPage : internalCurrentPage;
   const onChangePage = externalSetCurrentPage !== undefined ? externalSetCurrentPage : setInternalCurrentPage;
 
+  const headerKeys = Object.keys(AttrToNameHeader);
   // table cell template
   const tableCell = (value) => {
     return (
@@ -50,10 +51,11 @@ function Table({
       const row = rows[i];
       const rowCells = [];
 
-      const values = Object.values(row);
-      for (let j = 0; j < values.length; j++) {
-        rowCells.push(tableCell(values[j]));
+      for (const key of headerKeys) {
+        rowCells.push(tableCell(row[key]));
       }
+
+      // AttrToNameHeader.map((key) => rowCells.push(tableCell(row[key])));
 
       elements.push(
         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" key={i}>
@@ -90,20 +92,20 @@ function Table({
             <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
               <thead class="bg-gray-100 dark:bg-gray-700">
                 <tr>
-                  {headers &&
-                    headers.map((header) => (
+                  {AttrToNameHeader &&
+                    headerKeys.map((key) => (
                       <th
                         scope="col"
-                        class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                        class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400"
                       >
-                        {header}
+                        {AttrToNameHeader[key]}
                       </th>
                     ))}
                   <th
                     scope="col"
-                    class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400 w-40"
+                    class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 w-40"
                   >
-                    ACTIONS
+                    Actions
                   </th>
                 </tr>
               </thead>
