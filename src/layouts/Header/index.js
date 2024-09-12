@@ -10,7 +10,7 @@ function Header() {
 
   return (
     <nav style={{ fontFamily: 'Roboto' }}>
-      <div className="w-full bg-gray-200 h-[60px] flex justify-between items-center border-b-slate-200 border-2">
+      <div className="w-full h-[60px] flex justify-between items-center border-b-slate-200 border-2">
         <div className="flex items-center mx-8">
           <img src={logo} alt="company-logo" className="h-[60px]" />
         </div>

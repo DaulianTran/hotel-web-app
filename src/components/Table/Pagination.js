@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const Pagination = ({ totalItems, rowsPerPage, currentPage, onChangePage }) => {
   if (!rowsPerPage && typeof rowsPerPage !== 'number') {
     return null; // Handle the case where rowPerPage is not valid
@@ -32,7 +30,7 @@ const Pagination = ({ totalItems, rowsPerPage, currentPage, onChangePage }) => {
           }
           onClick={goToPreviousPage}
         >
-          Previous
+          {'<'}
         </button>,
       )
     : pageNumbers.push(<div className="w-[88px]"></div>);
@@ -61,13 +59,13 @@ const Pagination = ({ totalItems, rowsPerPage, currentPage, onChangePage }) => {
           }
           onClick={goToNextPage}
         >
-          next
+          {'>'}
         </button>,
       )
     : pageNumbers.push(<div className="w-[62px]"></div>);
 
   return (
-    <nav class="flex space-x-2 ml-[15%]" aria-label="Pagination">
+    <nav class="flex space-x-2 ml-[15%] justify-end mt-2" aria-label="Pagination">
       {pageNumbers}
     </nav>
   );

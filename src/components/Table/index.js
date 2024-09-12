@@ -60,12 +60,21 @@ function Table({
       elements.push(
         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" key={i}>
           {rowCells}
-          <td class="flex flex-row py-4 px-6 gap-2">
+          <td class="flex flex-row py-4 px-6 gap-2 min-h-14">
             <FontAwesomeIcon icon={faTrash} style={{ color: '#e61433' }} size="4xs" />
             <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="4xs" />
           </td>
         </tr>,
       );
+
+      const emptyRows = rowsPerPage - (endIndex - startIndex);
+      for (let i = 0; i < emptyRows; i++) {
+        elements.push(
+          <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" key={i}>
+            <td class="flex flex-row py-4 px-6 gap-2 min-h-14"></td>
+          </tr>,
+        );
+      }
     }
 
     return elements;
@@ -86,7 +95,7 @@ function Table({
 
   return (
     <>
-      <div class="overflow-x-auto shadow-md sm:rounded-lg m-2">
+      <div class="overflow-x-auto shadow-md sm:rounded-lg">
         <div class="inline-block min-w-full align-middle">
           <div class="overflow-hidden ">
             <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">

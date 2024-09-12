@@ -4,7 +4,7 @@ import Customer from '@/pages/Customer';
 
 const publicRoutes = [
   { path: '/', component: Admin },
-  { path: '/customer', component: Customer },
+  { path: '/Customer-List', component: Customer },
 ];
 
 const privateRoutes = [];
