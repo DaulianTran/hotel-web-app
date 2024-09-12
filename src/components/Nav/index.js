@@ -2,23 +2,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function Nav({ icon, name, href, color }) {
-  const [iconColor, setIconColor] = useState('white');
-  const [textColor, setTextColor] = useState('text-gray-300');
+function Nav({ icon, name, href, color, isActive }) {
+  const [iconColor, setIconColor] = useState(color || '');
+  const [textColor, setTextColor] = useState('text-stone-600');
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <li
-      className={`mt-3 ${textColor} ${isHovered ? 'bg-gray-500' : ''}`}
+      className={`mt-3 ${isHovered ? 'bg-blue-100' : ''} ${isActive ? 'text-blue-600' : textColor}`}
       onMouseEnter={() => {
-        setIconColor('#2b80ff');
+        setIconColor('#2563eb');
         setIsHovered(true);
-        setTextColor('text-white');
+        setTextColor('text-blue-600');
       }}
       onMouseLeave={() => {
-        setIconColor(color);
+        setIconColor(color || '');
         setIsHovered(false);
-        setTextColor('text-gray-300');
+        setTextColor('text-stone-600');
       }}
     >
       <Link className="flex flex-row gap-6 items-center py-2 pl-10" to={href}>
