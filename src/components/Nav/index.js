@@ -9,7 +9,7 @@ function Nav({ icon, name, href, color }) {
 
   return (
     <li
-      class={`mt-3 ${textColor} ${isHovered ? 'bg-gray-500' : ''}`}
+      className={`mt-3 ${textColor} ${isHovered ? 'bg-gray-500' : ''}`}
       onMouseEnter={() => {
         setIconColor('#2b80ff');
         setIsHovered(true);
@@ -21,7 +21,7 @@ function Nav({ icon, name, href, color }) {
         setTextColor('text-gray-300');
       }}
     >
-      <Link class="flex flex-row gap-6 items-center py-2 pl-10" to={href}>
+      <Link className="flex flex-row gap-6 items-center py-2 pl-10" to={href}>
         <FontAwesomeIcon icon={icon} color={iconColor} />
         <span>{name}</span>
       </Link>

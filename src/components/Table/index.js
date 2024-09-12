@@ -32,7 +32,7 @@ function Table({
   // table cell template
   const tableCell = (value) => {
     return (
-      <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white" key={value}>
+      <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white" key={value}>
         {value}
       </td>
     );
@@ -58,23 +58,25 @@ function Table({
       // AttrToNameHeader.map((key) => rowCells.push(tableCell(row[key])));
 
       elements.push(
-        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" key={i}>
+        <tr className="hover:bg-gray-100 dark:hover:bg-gray-700" key={i}>
           {rowCells}
-          <td class="flex flex-row py-4 px-6 gap-2 min-h-14">
-            <FontAwesomeIcon icon={faTrash} style={{ color: '#e61433' }} size="4xs" />
-            <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="4xs" />
+          <td className="flex flex-row py-4 px-6 gap-2 min-h-14">
+            <FontAwesomeIcon icon={faTrash} style={{ color: '#e61433' }} size="sm" />
+            <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="sm" />
           </td>
         </tr>,
       );
 
-      const emptyRows = rowsPerPage - (endIndex - startIndex);
-      for (let i = 0; i < emptyRows; i++) {
-        elements.push(
-          <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" key={i}>
-            <td class="flex flex-row py-4 px-6 gap-2 min-h-14"></td>
-          </tr>,
-        );
-      }
+      // ĐANG LỖI VỚI TÌM KIẾM
+
+      // const emptyRows = rowsPerPage - (endIndex - startIndex);
+      // for (let i = 0; i < emptyRows; i++) {
+      //   elements.push(
+      //     <tr className="hover:bg-gray-100 dark:hover:bg-gray-700" key={i}>
+      //       <td className="flex flex-row py-4 px-6 gap-2 min-h-14"></td>
+      //     </tr>,
+      //   );
+      // }
     }
 
     return elements;
@@ -83,11 +85,11 @@ function Table({
   // return all table rows at once
   const renderAllTableRow = () => {
     return rows.map((row, index) => (
-      <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" key={index}>
+      <tr className="hover:bg-gray-100 dark:hover:bg-gray-700" key={index}>
         {Object.values(row).map((value) => tableCell(value))}
-        <td class="flex flex-row py-4 px-6 gap-2">
-          <FontAwesomeIcon icon={faTrash} style={{ color: '#e61433' }} size="4xs" />
-          <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="4xs" />
+        <td className="flex flex-row py-4 px-6 gap-2">
+          <FontAwesomeIcon icon={faTrash} style={{ color: '#e61433' }} size="sm" />
+          <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="sm" />
         </td>
       </tr>
     ));
@@ -95,30 +97,30 @@ function Table({
 
   return (
     <>
-      <div class="overflow-x-auto shadow-md sm:rounded-lg">
-        <div class="inline-block min-w-full align-middle">
-          <div class="overflow-hidden ">
-            <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-              <thead class="bg-gray-100 dark:bg-gray-700">
+      <div className="overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="inline-block min-w-full align-middle">
+          <div className="overflow-hidden ">
+            <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
+              <thead className="bg-gray-100 dark:bg-gray-700">
                 <tr>
                   {AttrToNameHeader &&
                     headerKeys.map((key) => (
                       <th
                         scope="col"
-                        class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400"
+                        className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400"
                       >
                         {AttrToNameHeader[key]}
                       </th>
                     ))}
                   <th
                     scope="col"
-                    class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 w-40"
+                    className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 w-40"
                   >
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+              <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                 {/* Function check if user declare rowPerPage to decide which "return table rows" function is used */}
                 {rows ? (
                   rowsPerPage ? (

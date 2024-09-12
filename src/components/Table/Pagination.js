@@ -65,7 +65,7 @@ const Pagination = ({ totalItems, rowsPerPage, currentPage, onChangePage }) => {
     : pageNumbers.push(<div className="w-[62px]"></div>);
 
   return (
-    <nav class="flex space-x-2 ml-[15%] justify-end mt-2" aria-label="Pagination">
+    <nav className="flex space-x-2 ml-[15%] justify-end mt-2" aria-label="Pagination">
       {pageNumbers}
     </nav>
   );
