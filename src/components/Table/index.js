@@ -11,7 +11,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from './Pagination';
-import { faScrewdriverWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faScrewdriverWrench, faTrash, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
 function Table({
@@ -61,8 +61,12 @@ function Table({
         <tr className="hover:bg-gray-100 dark:hover:bg-gray-700" key={i}>
           {rowCells}
           <td className="flex flex-row py-4 px-6 gap-2 min-h-14">
-            <FontAwesomeIcon icon={faTrash} style={{ color: '#e61433' }} size="sm" />
-            <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="sm" />
+            <div className="bg-red-100 h-6 w-6 rounded-sm text-center cursor-pointer">
+              <FontAwesomeIcon icon={faTrashCan} style={{ color: '#fc2c1d' }} size="sm" />
+            </div>
+            <div className="bg-sky-100 h-6 w-6 rounded-sm text-center cursor-pointer">
+              <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="sm" />
+            </div>
           </td>
         </tr>,
       );
