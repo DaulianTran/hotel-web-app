@@ -91,7 +91,7 @@ function Customer() {
   useEffect(() => {
     const filtered = rows.filter((item) => item.name?.toLowerCase().includes(search.toLowerCase()));
     setFilteredData(filtered);
-  }, [search, rows]);
+  }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>

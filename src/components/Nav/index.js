@@ -18,7 +18,7 @@ function Nav({ icon, name, href, color, isActive, number, isAdmin }) {
 
   return (
     <li
-      className={`mt-3 ${isHovered ? 'bg-blue-100' : ''} ${isActive ? 'text-blue-600' : textColor}`}
+      className={`mt-3 me-2 ${isHovered ? 'bg-blue-100' : ''} ${isActive ? 'text-blue-600' : textColor}`}
       onMouseEnter={() => {
         setIconColor('#2563eb');
         setIsHovered(true);

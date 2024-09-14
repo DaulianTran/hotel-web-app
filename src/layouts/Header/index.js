@@ -2,6 +2,7 @@ import TeemeeAvatar from '../../assets/images/teemee_avatar.jpg';
 import logo from '../../assets/images/company-logo-full.png';
 import DropDown from './DropDown';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 function Header() {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => {
@@ -12,7 +13,9 @@ function Header() {
     <nav style={{ fontFamily: 'Roboto' }}>
       <div className="w-full h-[60px] flex justify-between items-center border-b-slate-200 border-2">
         <div className="flex items-center mx-8">
-          <img src={logo} alt="company-logo" className="h-[60px]" />
+          <Link to="/">
+            <img src={logo} alt="company-logo" className="h-[60px]" />
+          </Link>
         </div>
         <div className="flex items-center tab-holder grow">
           <a href="/">Note</a>
