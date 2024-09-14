@@ -3,6 +3,7 @@ import Button from '@/components/Button';
 import Search from '@/components/Search';
 import Table from '@/components/Table';
 import Location from '@/components/Location';
+import { useLocation } from 'react-router-dom';
 
 function Customer() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,6 +15,8 @@ function Customer() {
   const handleShowing = (event) => {
     setShowing(Number(event.target.value));
   };
+
+  const location = useLocation();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const rows = [
@@ -94,7 +97,7 @@ function Customer() {
     <div>
       <div className="flex justify-between">
         <Location />
-        <Button name="Add New Customer" href="/add" />
+        <Button name="Add New Customer" href={`${location.pathname}/Add-Customer`} />
       </div>
       <div className="flex flex-col bg-white rounded-lg p-4 mt-5">
         <div className="flex flex-row justify-between items-baseline mb-3">

@@ -18,9 +18,7 @@ function Location() {
               {!isLast && (
                 <span>
                   {' / '}
-                  <Link to={routeTo} className="text-blue-600">
-                    {name.replace(/-/g, ' ')}
-                  </Link>
+                  <Link to={routeTo}>{name.replace(/-/g, ' ')}</Link>
                 </span>
               )}
               {isLast && (
