@@ -9,9 +9,7 @@
   + If you about to use pagination in database, you should transfer state to parent component
 */
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from './Pagination';
-import { faScrewdriverWrench, faTrash, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useState, Children, isValidElement, cloneElement } from 'react';
 import RowDeleteWithAPI from './RowDeleteWithAPI';
 import RowUpdateWithAPI from './RowUpdateWithAPI';
@@ -86,13 +84,18 @@ function Table({
       hasAction &&
         rowCells.push(
           <td className="flex flex-row gap-2 px-6 py-4 min-h-14">
-            {Object.keys(actionToggle).map((action) => {
-              if (actionToggle[action]) {
-                const Component = componentsMap[action];
-                return cloneElement(<Component />, { row });
+            {Children.map(children, (child) => {
+              if (isValidElement(child)) {
+                // Kiểm tra mỗi actionToggle
+                return Object.keys(actionToggle).map((action) => {
+                  if (actionToggle[action] && child.type.displayName === action) {
+                    return cloneElement(child, { row });
+                  }
+                  return null;
+                });
               }
               return null;
-            })}
+            }).flat()}
           </td>,
         );
 

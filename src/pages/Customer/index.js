@@ -4,11 +4,7 @@ import Search from '@/components/Search';
 import Table from '@/components/Table';
 import Location from '@/components/Location';
 import { useLocation } from 'react-router-dom';
-import Dialog from '@/components/Dialog';
-import DialogBody from '@/components/Dialog/DialogBody';
 import DeleteCustomerDialog from './DeleteCustomerDialog';
-import { faScrewdriverWrench, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RowUpdateWithAPI from '@/components/Table/RowUpdateWithAPI';
 import RowDeleteWithAPI from '@/components/Table/RowDeleteWithAPI';
 
@@ -107,13 +103,6 @@ function Customer() {
       <div className="flex justify-between">
         <Location />
         <Button name="Add New Customer" href={`${location.pathname}/Add-Customer`} />
-        <button
-          className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear bg-pink-500 rounded shadow outline-none active:bg-pink-600 hover:shadow-lg focus:outline-none"
-          type="button"
-          onClick={() => setOpenState(true)}
-        >
-          Open regular modal
-        </button>
         <DeleteCustomerDialog openState={openState} setOpenState={setOpenState} selectedCustomer={selectedCustomer} />
       </div>
       <div className="flex flex-col p-4 mt-5 bg-white rounded-lg">
@@ -143,6 +132,7 @@ function Customer() {
             onChangePage={setCurrentPage}
           >
             <RowUpdateWithAPI />
+            <RowDeleteWithAPI onClick={() => setOpenState(true)} />
           </Table>
         </div>
       </div>
