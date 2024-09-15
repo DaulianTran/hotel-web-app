@@ -72,6 +72,7 @@ function ArrivalTables() {
       rowsPerPage={3}
       currentPage={currentPage}
       onChangePage={setCurrentPage}
+      isAdmin
     />
   );
 }
@@ -134,6 +135,7 @@ function DepartureTables() {
       rowsPerPage={3}
       currentPage={currentPage}
       onChangePage={setCurrentPage}
+      isAdmin
     />
   );
 }
@@ -196,6 +198,7 @@ function CurrentTables() {
       rowsPerPage={3}
       currentPage={currentPage}
       onChangePage={setCurrentPage}
+      isAdmin
     />
   );
 }
