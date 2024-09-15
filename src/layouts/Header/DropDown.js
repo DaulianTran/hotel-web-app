@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function DropDown() {
   const profile = [
     { name: 'Edit profile', href: '' },
@@ -24,13 +26,13 @@ function DropDown() {
           </a>
         ))}
         <hr className="m-2 solid"></hr>
-        <a
-          href="/"
+        <Link
+          to="/login"
           className="block px-4 py-2 text-sm text-left hover:bg-slate-600 focus:bg-slate-500 "
           role="menuitem"
         >
           Log Out
-        </a>
+        </Link>
       </div>
     </div>
   );
