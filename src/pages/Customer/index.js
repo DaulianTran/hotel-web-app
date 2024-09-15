@@ -4,8 +4,13 @@ import Search from '@/components/Search';
 import Table from '@/components/Table';
 import Location from '@/components/Location';
 import { useLocation } from 'react-router-dom';
+import DeleteCustomerDialog from './DeleteCustomerDialog';
+import RowUpdateWithAPI from '@/components/Table/RowUpdateWithAPI';
+import RowDeleteWithAPI from '@/components/Table/RowDeleteWithAPI';
 
 function Customer() {
+  const [openState, setOpenState] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const AttrToNameHeader = { id: 'ID', name: 'Name', email: 'Email' };
 
@@ -98,15 +103,16 @@ function Customer() {
       <div className="flex justify-between">
         <Location />
         <Button name="Add New Customer" href={`${location.pathname}/Add-Customer`} />
+        <DeleteCustomerDialog openState={openState} setOpenState={setOpenState} selectedCustomer={selectedCustomer} />
       </div>
-      <div className="flex flex-col bg-white rounded-lg p-4 mt-5">
-        <div className="flex flex-row justify-between items-baseline mb-3">
+      <div className="flex flex-col p-4 mt-5 bg-white rounded-lg">
+        <div className="flex flex-row items-baseline justify-between mb-3">
           <div>
             <label>Showing </label>
             <select
               value={showing}
               onChange={handleShowing}
-              className="border-none ml-2 rounded-md px-4 bg-slate-100 focus:outline-none focus:ring-0"
+              className="px-4 ml-2 border-none rounded-md bg-slate-100 focus:outline-none focus:ring-0"
             >
               {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
                 <option key={number} value={number}>
@@ -124,7 +130,10 @@ function Customer() {
             rowsPerPage={showing}
             currentPage={currentPage}
             onChangePage={setCurrentPage}
-          />
+          >
+            <RowUpdateWithAPI />
+            <RowDeleteWithAPI onClick={() => setOpenState(true)} />
+          </Table>
         </div>
       </div>
     </div>

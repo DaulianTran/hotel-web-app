@@ -9,10 +9,10 @@
   + If you about to use pagination in database, you should transfer state to parent component
 */
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from './Pagination';
-import { faScrewdriverWrench, faTrash, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useState, Children, isValidElement, cloneElement } from 'react';
+import RowDeleteWithAPI from './RowDeleteWithAPI';
+import RowUpdateWithAPI from './RowUpdateWithAPI';
 
 function Table({
   AttrToNameHeader,
@@ -22,6 +22,7 @@ function Table({
   currentPage: externalCurrentPage,
   onChangePage: externalSetCurrentPage,
   isAdmin,
+  children,
 }) {
   const [internalCurrentPage, setInternalCurrentPage] = useState(1);
 
@@ -34,10 +35,30 @@ function Table({
   const onChangePage = externalSetCurrentPage !== undefined ? externalSetCurrentPage : setInternalCurrentPage;
 
   const headerKeys = Object.keys(AttrToNameHeader);
+
+  //check if action is declared, then update the variable, can add new actions for future update.
+  // If update, add new attribute to actionToggle and another else case if to forEach loop
+  const actionToggle = { RowDeleteWithAPI: false, RowUpdateWithAPI: false };
+  const componentsMap = {
+    RowDeleteWithAPI: RowDeleteWithAPI,
+    RowUpdateWithAPI: RowUpdateWithAPI,
+  };
+
+  Children.toArray(children).forEach((child) => {
+    if (isValidElement(child)) {
+      if (child.type.displayName === 'RowDeleteWithAPI') {
+        actionToggle.RowDeleteWithAPI = true;
+      } else if (child.type.displayName === 'RowUpdateWithAPI') {
+        actionToggle.RowUpdateWithAPI = true;
+      }
+    }
+  });
+  const hasAction = Object.values(actionToggle).some((value) => value === true);
+
   // table cell template
   const tableCell = (value) => {
     return (
-      <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white" key={value}>
+      <td className="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white" key={value}>
         {value}
       </td>
     );
@@ -60,21 +81,29 @@ function Table({
         rowCells.push(tableCell(row[key]));
       }
 
+      hasAction &&
+        rowCells.push(
+          <td className="flex flex-row gap-2 px-6 py-4 min-h-14">
+            {Children.map(children, (child) => {
+              if (isValidElement(child)) {
+                // Kiểm tra mỗi actionToggle
+                return Object.keys(actionToggle).map((action) => {
+                  if (actionToggle[action] && child.type.displayName === action) {
+                    return cloneElement(child, { row });
+                  }
+                  return null;
+                });
+              }
+              return null;
+            }).flat()}
+          </td>,
+        );
+
       // AttrToNameHeader.map((key) => rowCells.push(tableCell(row[key])));
 
       elements.push(
         <tr className="hover:bg-gray-100 dark:hover:bg-gray-700" key={i}>
           {rowCells}
-          {!isAdmin ? (
-            <td className="flex flex-row py-4 px-6 gap-2 min-h-14">
-              <div className="bg-red-100 h-6 w-6 rounded-sm text-center cursor-pointer">
-                <FontAwesomeIcon icon={faTrashCan} style={{ color: '#fc2c1d' }} size="sm" />
-              </div>
-              <div className="bg-sky-100 h-6 w-6 rounded-sm text-center cursor-pointer">
-                <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="sm" />
-              </div>
-            </td>
-          ) : null}
         </tr>,
       );
 
@@ -84,7 +113,7 @@ function Table({
       // for (let i = 0; i < emptyRows; i++) {
       //   elements.push(
       //     <tr className="hover:bg-gray-100 dark:hover:bg-gray-700" key={i}>
-      //       <td className="flex flex-row py-4 px-6 gap-2 min-h-14"></td>
+      //       <td className="flex flex-row gap-2 px-6 py-4 min-h-14"></td>
       //     </tr>,
       //   );
       // }
@@ -98,14 +127,26 @@ function Table({
     return rows.map((row, index) => (
       <tr className="hover:bg-gray-100 dark:hover:bg-gray-700" key={index}>
         {Object.values(row).map((value) => tableCell(value))}
-        {!isAdmin ? (
-          <td className="flex flex-row py-4 px-6 gap-2">
-            <FontAwesomeIcon icon={faTrash} style={{ color: '#e61433' }} size="sm" />
-            <FontAwesomeIcon icon={faScrewdriverWrench} style={{ color: '#74C0FC' }} size="sm" />
-          </td>
-        ) : null}
+        {Object.keys(actionToggle).map((action) => {
+          if (actionToggle[action]) {
+            const Component = componentsMap[action];
+            cloneElement(<Component />, { row });
+          }
+        })}
       </tr>
     ));
+  };
+
+  const renderTableHeader = (title, index) => {
+    return (
+      <th
+        scope="col"
+        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400"
+        key={index}
+      >
+        {title}
+      </th>
+    );
   };
 
   return (
@@ -116,23 +157,8 @@ function Table({
             <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
               <thead className="bg-gray-100 dark:bg-gray-700">
                 <tr>
-                  {AttrToNameHeader &&
-                    headerKeys.map((key) => (
-                      <th
-                        scope="col"
-                        className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400"
-                      >
-                        {AttrToNameHeader[key]}
-                      </th>
-                    ))}
-                  {!isAdmin ? (
-                    <th
-                      scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 w-40"
-                    >
-                      Actions
-                    </th>
-                  ) : null}
+                  {AttrToNameHeader && headerKeys.map((key, index) => renderTableHeader(AttrToNameHeader[key], index))}
+                  {hasAction && renderTableHeader('Action', 'Action')}
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
